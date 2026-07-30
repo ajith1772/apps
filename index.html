@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Launcher</title>
-    <!-- FontAwesome for High Quality Icons -->
+    <title>App Portal</title>
+    <!-- FontAwesome 6 for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --bg-color: #0d0f17;
-            --card-size: 110px;
-            --icon-size: 2.8rem;
-            --border-radius: 28px;
+            --bg-color: #0b0d14;
+            --icon-box-size: 72px;
+            --icon-font-size: 1.8rem;
+            --border-radius: 20px;
         }
 
         * {
@@ -23,138 +23,167 @@
         body {
             background-color: var(--bg-color);
             background-image: 
-                radial-gradient(at 10% 10%, rgba(120, 119, 198, 0.15) 0px, transparent 50%),
-                radial-gradient(at 90% 90%, rgba(255, 119, 198, 0.12) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(0, 210, 255, 0.08) 0px, transparent 50%);
+                radial-gradient(at 15% 15%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 85% 85%, rgba(236, 72, 153, 0.12) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.08) 0px, transparent 50%);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 2rem 1rem;
+            padding: 2.5rem 1rem;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #ffffff;
         }
 
         .portal-container {
             width: 100%;
-            max-width: 900px;
+            max-width: 850px;
             display: flex;
             flex-direction: column;
-            gap: 3rem;
+            gap: 2.5rem;
         }
 
-        /* Section Styling */
+        /* Section Container */
         .section-wrapper {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 32px;
-            padding: 2.5rem 2rem;
-            position: relative;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            border-radius: 28px;
+            padding: 2rem 1.8rem 1.8rem 1.8rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
 
-        /* Icon Grid */
+        /* Section Titles */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: uppercase;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 0.75rem;
+        }
+
+        .section-header i {
+            color: #6366f1;
+            font-size: 1rem;
+        }
+
+        /* App Grid Layout */
         .app-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(var(--card-size), 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+            gap: 1.5rem 1rem;
             justify-items: center;
+        }
+
+        /* App Item Card */
+        .app-card {
+            display: flex;
+            flex-direction: column;
             align-items: center;
+            text-decoration: none;
+            width: 100%;
+            max-width: 96px;
+            gap: 8px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Category Header Minimal Icons */
-        .category-badge {
-            position: absolute;
-            top: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 6px 18px;
-            border-radius: 20px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.1rem;
+        .app-card:hover {
+            transform: translateY(-6px);
         }
 
-        /* App Icon Base */
-        .app-tile {
-            width: var(--card-size);
-            height: var(--card-size);
+        /* Medium Icon Box */
+        .app-icon {
+            width: var(--icon-box-size);
+            height: var(--icon-box-size);
             border-radius: var(--border-radius);
             display: flex;
             align-items: center;
             justify-content: center;
-            text-decoration: none;
+            font-size: var(--icon-font-size);
             color: #ffffff;
-            font-size: var(--icon-size);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
         }
 
-        .app-tile:hover {
-            transform: translateY(-10px) scale(1.08);
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.5);
+        .app-card:hover .app-icon {
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
         }
 
-        .app-tile:active {
-            transform: translateY(-2px) scale(0.98);
+        /* Label Under Icon */
+        .app-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+            text-align: center;
+            line-height: 1.2;
+            letter-spacing: 0.3px;
+            word-break: break-word;
+            transition: color 0.3s ease;
         }
 
-        /* Modern Gradient Profiles for Each App */
-        /* Official */
-        .icon-bus { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #feada6 100%); color: #721c24; }
-        .icon-election { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .icon-uss { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-        .icon-fest { background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%); }
-        .icon-news { background: linear-gradient(135deg, #f83600 0%, #f9d423 100%); }
-        .icon-timetable { background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%); }
-        .icon-db { background: linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%); }
-        .icon-ss { background: linear-gradient(135deg, #02aab0 0%, #00cdac 100%); }
+        .app-card:hover .app-label {
+            color: #ffffff;
+        }
 
-        /* Personal */
-        .icon-ev-my { background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%); }
-        .icon-ev-sister { background: linear-gradient(135deg, #b224ef 0%, #7579ff 100%); }
-        .icon-map { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: #501d00; }
+        /* Icon Custom Gradients */
+        .icon-bus { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .icon-election { background: linear-gradient(135deg, #6366f1, #4f46e5); }
+        .icon-uss { background: linear-gradient(135deg, #10b981, #059669); }
+        .icon-meal { background: linear-gradient(135deg, #f97316, #ea580c); } /* NOON MEAL */
+        .icon-fest { background: linear-gradient(135deg, #ec4899, #db2777); }
+        .icon-news { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .icon-timetable { background: linear-gradient(135deg, #06b6d4, #0891b2); }
+        .icon-db { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .icon-ss { background: linear-gradient(135deg, #14b8a6, #0d9488); }
 
-        /* Icon Glow Effect on Hover */
-        .app-tile::after {
+        .icon-ev-my { background: linear-gradient(135deg, #10b981, #047857); }
+        .icon-ev-sister { background: linear-gradient(135deg, #a855f7, #7e22ce); }
+        .icon-map { background: linear-gradient(135deg, #f43f5e, #e11d48); }
+
+        /* Icon Glow on Hover */
+        .app-icon::after {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
+            inset: 0;
             border-radius: var(--border-radius);
             background: inherit;
-            filter: blur(15px);
+            filter: blur(12px);
             opacity: 0;
             z-index: -1;
-            transition: opacity 0.4s ease;
+            transition: opacity 0.3s ease;
         }
 
-        .app-tile:hover::after {
-            opacity: 0.6;
+        .app-card:hover .app-icon::after {
+            opacity: 0.5;
         }
 
-        /* Device Specific Layout Enhancements */
+        /* Responsive Breakpoints */
         @media (max-width: 600px) {
             :root {
-                --card-size: 85px;
-                --icon-size: 2.2rem;
-                --border-radius: 22px;
-            }
-
-            .portal-container {
-                gap: 2rem;
+                --icon-box-size: 64px;
+                --icon-font-size: 1.5rem;
+                --border-radius: 17px;
             }
 
             .section-wrapper {
-                padding: 2rem 1.2rem;
+                padding: 1.5rem 1rem 1.2rem 1rem;
             }
 
             .app-grid {
-                gap: 1.2rem;
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+                gap: 1.2rem 0.5rem;
+            }
+
+            .app-label {
+                font-size: 0.65rem;
             }
         }
     </style>
@@ -163,78 +192,118 @@
 
     <div class="portal-container">
         
-        <!-- Official Section -->
+        <!-- OFFICIAL LINKS -->
         <div class="section-wrapper">
-            <div class="category-badge">
+            <div class="section-header">
                 <i class="fa-solid fa-building-columns"></i>
+                <span>Official</span>
             </div>
+            
             <div class="app-grid">
-                <!-- School Bus -->
-                <a href="https://tdtti.github.io/schoolbus/" target="_blank" class="app-tile icon-bus" title="SCHOOL BUS">
-                    <i class="fa-solid fa-bus-simple"></i>
+                <!-- 1. School Bus -->
+                <a href="https://tdtti.github.io/schoolbus/" target="_blank" class="app-card">
+                    <div class="app-icon icon-bus">
+                        <i class="fa-solid fa-bus-simple"></i>
+                    </div>
+                    <span class="app-label">SCHOOL BUS</span>
                 </a>
 
-                <!-- Election -->
-                <a href="https://tdtti.github.io/School-Parliament/" target="_blank" class="app-tile icon-election" title="ELECTION">
-                    <i class="fa-solid fa-check-to-slot"></i>
+                <!-- 2. Election -->
+                <a href="https://tdtti.github.io/School-Parliament/" target="_blank" class="app-card">
+                    <div class="app-icon icon-election">
+                        <i class="fa-solid fa-check-to-slot"></i>
+                    </div>
+                    <span class="app-label">ELECTION</span>
                 </a>
 
-                <!-- USS Portal -->
-                <a href="https://tdtti.github.io/TRAILS/" target="_blank" class="app-tile icon-uss" title="USS PORTAL">
-                    <i class="fa-solid fa-award"></i>
-                </a>
-                
-                <!-- NOON MEAL Portal -->
-                <a href="https://tdtti.github.io/meal/" target="_blank" class="app-tile icon-noonmeal" title="NOON MEALPORTAL">
-                    <i class="fa-solid fa-meal"></i>
+                <!-- 3. USS Portal -->
+                <a href="https://tdtti.github.io/TRAILS/" target="_blank" class="app-card">
+                    <div class="app-icon icon-uss">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <span class="app-label">USS PORTAL</span>
                 </a>
 
-                <!-- School Fest -->
-                <a href="https://tdtti.github.io/Uthsav/" target="_blank" class="app-tile icon-fest" title="School Fest">
-                    <i class="fa-solid fa-masks-theater"></i>
+                <!-- 4. Noon Meal (NEW) -->
+                <a href="https://tdtti.github.io/meal/" target="_blank" class="app-card">
+                    <div class="app-icon icon-meal">
+                        <i class="fa-solid fa-utensils"></i>
+                    </div>
+                    <span class="app-label">NOON MEAL</span>
                 </a>
 
-                <!-- News -->
-                <a href="https://tdtti.github.io/school-news-2025/" target="_blank" class="app-tile icon-news" title="News">
-                    <i class="fa-solid fa-newspaper"></i>
+                <!-- 5. School Fest -->
+                <a href="https://tdtti.github.io/Uthsav/" target="_blank" class="app-card">
+                    <div class="app-icon icon-fest">
+                        <i class="fa-solid fa-masks-theater"></i>
+                    </div>
+                    <span class="app-label">SCHOOL FEST</span>
                 </a>
 
-                <!-- Time Table -->
-                <a href="https://tdtti.github.io/tdtti/" target="_blank" class="app-tile icon-timetable" title="TIME TABLE">
-                    <i class="fa-solid fa-calendar-days"></i>
+                <!-- 6. News -->
+                <a href="https://tdtti.github.io/school-news-2025/" target="_blank" class="app-card">
+                    <div class="app-icon icon-news">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <span class="app-label">NEWS</span>
                 </a>
 
-                <!-- Student Database -->
-                <a href="https://tdtti.github.io/tdtti2/" target="_blank" class="app-tile icon-db" title="Student Database">
-                    <i class="fa-solid fa-address-book"></i>
+                <!-- 7. Time Table -->
+                <a href="https://tdtti.github.io/tdtti/" target="_blank" class="app-card">
+                    <div class="app-icon icon-timetable">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <span class="app-label">TIME TABLE</span>
                 </a>
 
-                <!-- Social Science 7 -->
-                <a href="https://tdtti.github.io/ss/" target="_blank" class="app-tile icon-ss" title="SOCIAL SCIENCE 7">SS
-                    <i class="fa-solid fa-earth-americas"></i>
+                <!-- 8. Student Database -->
+                <a href="https://tdtti.github.io/tdtti2/" target="_blank" class="app-card">
+                    <div class="app-icon icon-db">
+                        <i class="fa-solid fa-address-book"></i>
+                    </div>
+                    <span class="app-label">STUDENT DATABASE</span>
+                </a>
+
+                <!-- 9. Social Science 7 -->
+                <a href="https://tdtti.github.io/ss/" target="_blank" class="app-card">
+                    <div class="app-icon icon-ss">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <span class="app-label">SOCIAL SCIENCE 7</span>
                 </a>
             </div>
         </div>
 
-        <!-- Personal Section -->
+        <!-- PERSONAL LINKS -->
         <div class="section-wrapper">
-            <div class="category-badge">
+            <div class="section-header">
                 <i class="fa-solid fa-user"></i>
+                <span>Personal</span>
             </div>
+
             <div class="app-grid">
-                <!-- Electrical Vehicle Owned -->
-                <a href="https://ajith1772.github.io/mpa/" target="_blank" class="app-tile icon-ev-my" title="Electrical Vehicle Owned">
-                    <i class="fa-solid fa-charging-station"></i>
+                <!-- 1. Electrical Vehicle Owned -->
+                <a href="https://ajith1772.github.io/mpa/" target="_blank" class="app-card">
+                    <div class="app-icon icon-ev-my">
+                        <i class="fa-solid fa-charging-station"></i>
+                    </div>
+                    <span class="app-label">EV OWNED</span>
                 </a>
 
-                <!-- Electrical Vehicle Sister -->
-                <a href="https://ajith1772.github.io/chellu/" target="_blank" class="app-tile icon-ev-sister" title="Electrical Vehicle Sister">
-                    <i class="fa-solid fa-bolt-lightning"></i>
+                <!-- 2. Electrical Vehicle Sister -->
+                <a href="https://ajith1772.github.io/chellu/" target="_blank" class="app-card">
+                    <div class="app-icon icon-ev-sister">
+                        <i class="fa-solid fa-bolt-lightning"></i>
+                    </div>
+                    <span class="app-label">EV SISTER</span>
                 </a>
 
-                <!-- Census Map -->
-                <a href="https://ajith1772.github.io/ajith/" target="_blank" class="app-tile icon-map" title="Census Map">
-                    <i class="fa-solid fa-map-location-dot"></i>
+                <!-- 3. Census Map -->
+                <a href="https://ajith1772.github.io/ajith/" target="_blank" class="app-card">
+                    <div class="app-icon icon-map">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                    </div>
+                    <span class="app-label">CENSUS MAP</span>
                 </a>
             </div>
         </div>
